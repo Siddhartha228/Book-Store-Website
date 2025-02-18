@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom"; 
+import Navbar from "./Navbar"
 
 const Login = () => {
   return (
+    <><Navbar/>
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h2 className="text-2xl font-semibold text-gray-800 text-center mb-4">Login</h2>
@@ -37,12 +39,13 @@ const Login = () => {
           </Link>
         </p>
         <p className="text-sm text-center text-gray-500 mt-2">
-          <Link to="/AdminLogin" className="text-gray-800 font-medium">
+          <Link to="/admin-login" className="text-gray-800 font-medium">
             Login as Admin
           </Link>
         </p>
       </div>
     </div>
+    </>
   );
 };
 

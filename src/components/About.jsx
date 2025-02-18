@@ -1,7 +1,9 @@
 import React from "react";
+import Navbar from "./Navbar"
 
 function About() {
   return (
+    <><Navbar/>
     <div className="bg-gray-100 min-h-screen py-12 px-6">
       {/* Header Section */}
       <div className="text-center max-w-3xl mx-auto">
@@ -36,6 +38,7 @@ function About() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 
