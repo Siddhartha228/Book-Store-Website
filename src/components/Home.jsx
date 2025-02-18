@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { Link } from "react-router-dom";
 
 const one = '/one.jpeg';
 const two = '/two.jpg';
@@ -76,7 +77,9 @@ function Home() {
             className="mt-6 px-6 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 transition duration-300"
             whileHover={{ scale: 1.1 }}
           >
-            Browse Books
+            <Link to="/login" className="flex items-center space-x-2">
+              <span>Browse Books</span>
+            </Link>
           </motion.button>
         </div>
 
