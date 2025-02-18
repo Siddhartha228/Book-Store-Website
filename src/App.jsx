@@ -9,6 +9,7 @@ import AdminDashboard from "./components/Admin/AdminDashboard"
 
 import Homeu from "./components/user/Homeu"
 import Aboutu from "./components/user/Aboutu"
+import Books from "./components/user/Books"
 
 function App() {
 
@@ -27,6 +28,8 @@ function App() {
 
           <Route path="/userhome" element={<Homeu/>} />
           <Route path="/userabout" element={<Aboutu/>}/>
+          <Route path="/books" element={<Books/>}/>
+          
       </Routes>
     </BrowserRouter>
     </>
