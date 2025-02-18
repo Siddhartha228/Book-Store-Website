@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
-// Importing book images
 const one = '/one.jpeg';
 const two = '/two.jpg';
 const three = '/three.jpg';
@@ -107,6 +107,7 @@ function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

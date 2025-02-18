@@ -1,5 +1,6 @@
 import React from "react";
 import UserNav from "./UserNav";
+import Footer from "../Footer";
 
 function Aboutu() {
   return (
@@ -38,6 +39,7 @@ function Aboutu() {
         ))}
       </div>
     </div>
+    <Footer/>
     </>
   );
 }

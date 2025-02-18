@@ -1,9 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import UserNav from "./UserNav";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import Footer from "../Footer";
 
-// Importing book images
 const one = '/one.jpeg';
 const two = '/two.jpg';
 const three = '/three.jpg';
@@ -110,6 +110,7 @@ function Homeu() {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }
