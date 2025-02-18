@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import Navbar from "./Navbar";
+import UserNav from "./UserNav";
 
 // Importing book images
 const one = '/one.jpeg';
@@ -49,10 +49,10 @@ const books = [
   }
 ];
 
-function Home() {
+function Homeu() {
   return (
     <>
-      <Navbar />
+      <UserNav/>
       <div className="bg-gray-100 min-h-screen">
         {/* Hero Section */}
         <div className="relative bg-blue-900 text-white h-[500px] flex flex-col justify-center items-center text-center px-4">
@@ -111,4 +111,5 @@ function Home() {
   );
 }
 
-export default Home;
+export default Homeu;
+
