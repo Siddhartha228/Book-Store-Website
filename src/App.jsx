@@ -12,6 +12,9 @@ import Aboutu from "./components/user/Aboutu"
 
 import Books from "./components/user/Books"
 
+import ManageBook from "./components/Admin/ManageBook"
+import CustomerDetails from "./components/Admin/CustomerDetails"
+
 function App() {
   return (
     <>
@@ -25,6 +28,9 @@ function App() {
           
           <Route path="/admin-login" element={<AdminLogin/>}/>
           <Route path="/dashboard" element={<AdminDashboard/>}/>
+
+          <Route path="/manage-book" element={<ManageBook/>}/>
+          <Route path="/customer-detail" element={<CustomerDetails/>}/>
 
           <Route path="/userhome" element={<Homeu/>}/>
           <Route path="/userabout" element={<Aboutu/>}/>
