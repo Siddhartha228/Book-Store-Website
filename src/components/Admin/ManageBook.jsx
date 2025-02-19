@@ -40,7 +40,7 @@ function ManageBook() {
   return (
     <>
       <AdminNav />
-      <div className="min-h-screen bg-gray-100 p-8">
+      <div className="min-h-screen bg-gray-100 p-8 relative">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-800 mb-6">Manage Books</h1>
           
@@ -88,37 +88,38 @@ function ManageBook() {
             </div>
           </div>
 
-          {isDeleteModalOpen && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-lg p-6 max-w-md w-full">
-                <h3 className="text-lg font-medium mb-4">Confirm Delete</h3>
-                <p className="text-gray-600 mb-6">
-                  Are you sure you want to delete this book? This action cannot be undone.
-                </p>
-                <div className="flex justify-end space-x-4">
-                  <button
-                    onClick={() => setIsDeleteModalOpen(false)}
-                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={() => handleDelete(selectedBook)}
-                    className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
           {books.length === 0 && (
             <div className="text-center py-12 text-gray-500">
               No books found in the database
             </div>
           )}
         </div>
+
+        {isDeleteModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-20">
+            <div className="absolute inset-0 backdrop-blur-lg z-10"></div> {/* Applying the blur to the background */}
+            <div className="bg-white rounded-lg p-6 max-w-md w-full z-30">
+              <h3 className="text-lg font-medium mb-4">Confirm Delete</h3>
+              <p className="text-gray-600 mb-6">
+                Are you sure you want to delete this book? This action cannot be undone.
+              </p>
+              <div className="flex justify-end space-x-4">
+                <button
+                  onClick={() => setIsDeleteModalOpen(false)}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleDelete(selectedBook)}
+                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
