@@ -5,18 +5,18 @@ function CustomerDetails() {
   const [customers, setCustomers] = useState([
     {
       id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      bookTitle: "The Great Gatsby",
-      totalPrice: 15.99,
+      name: "Siddhartha Dhakal",
+      email: "dhakal1@gmail.com",
+      bookTitle: "Database System Concepts",
+      totalPrice: 1800,
       status: "Pending"
     },
     {
       id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      bookTitle: "1984",
-      totalPrice: 18.50,
+      name: "Shiva Gautam",
+      email: "shiva@gmail.com",
+      bookTitle: "Python Crash Course",
+      totalPrice: 1200,
       status: "Pending"
     }
   ]);
@@ -52,7 +52,7 @@ function CustomerDetails() {
                       <td className="px-6 py-4 whitespace-nowrap border-r border-gray-300 text-sm font-medium text-gray-900">{customer.name}</td>
                       <td className="px-6 py-4 whitespace-nowrap border-r border-gray-300 text-sm text-gray-500">{customer.email}</td>
                       <td className="px-6 py-4 whitespace-nowrap border-r border-gray-300 text-sm text-gray-500">{customer.bookTitle}</td>
-                      <td className="px-6 py-4 whitespace-nowrap border-r border-gray-300 text-sm text-gray-500">${customer.totalPrice}</td>
+                      <td className="px-6 py-4 whitespace-nowrap border-r border-gray-300 text-sm text-gray-500">{customer.totalPrice}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
                         <button 
                           className={`px-4 py-2 rounded-lg shadow-md transition font-bold ${customer.status === "Delivered" ? "bg-green-600 text-white" : "bg-gray-200 text-gray-700"}`} 
@@ -62,10 +62,6 @@ function CustomerDetails() {
                           className={`px-4 py-2 rounded-lg shadow-md transition font-bold ${customer.status === "Not Delivered" ? "bg-yellow-600 text-white" : "bg-gray-200 text-gray-700"}`} 
                           onClick={() => updateStatus(customer.id, "Not Delivered")}
                         >Not Delivered</button>
-                        <button 
-                          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 shadow-md transition font-bold" 
-                          onClick={() => setCustomers(customers.filter(c => c.id !== customer.id))}
-                        >Cancel Order</button>
                       </td>
                     </tr>
                   ))}

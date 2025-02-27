@@ -5,27 +5,27 @@ function ManageBook() {
   const [books, setBooks] = useState([
     {
       id: 1,
-      title: "The Great Gatsby",
-      author: "F. Scott Fitzgerald",
-      description: "A story of the Jazz Age...",
-      price: 15.99,
-      image: "https://example.com/great-gatsby.jpg"
+      title: "Python Crash Course",
+      author: "Eric Matthes",
+      description: "A hands-on, project-based introduction to programming in Python.",
+      price: "1200",
+      image: "https://th.bing.com/th/id/OIP.YXeUxEXczKyvokUWv3k3cAHaFj?w=223&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
     },
     {
       id: 2,
-      title: "To Kill a Mockingbird",
-      author: "Harper Lee",
-      description: "A novel about racial injustice...",
-      price: 12.99,
-      image: "https://example.com/mockingbird.jpg"
+      title: "Java: The Complete Reference",
+      author: "Herbert Schildt",
+      description: "Comprehensive guide to Java programming, covering all aspects of the language.",
+      price: "2000",
+      image: "https://th.bing.com/th/id/OIP.xe4HFq4YeBrfkgBA4z82KgHaJS?w=202&h=253&c=7&r=0&o=5&dpr=1.3&pid=1.7"
     },
     {
       id: 3,
-      title: "1984",
-      author: "George Orwell",
-      description: "A dystopian future society...",
-      price: 18.50,
-      image: "https://example.com/1984.jpg"
+      title: "Database System Concepts",
+      author: "Abraham Silberschatz",
+      description: "Fundamentals of database systems, including design and implementation.",
+      price: "1800",
+      image: "https://th.bing.com/th/id/OIP.O4UlfXUrkZdpH9jEDobJjQHaJ4?w=202&h=269&c=7&r=0&o=5&dpr=1.3&pid=1.7"
     }
   ]);
 
@@ -70,7 +70,7 @@ function ManageBook() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-gray-300">{book.title}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r border-gray-300">{book.author}</td>
                       <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate border-r border-gray-300">{book.description}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r border-gray-300">${book.price}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r border-gray-300">{book.price}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
                         <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-md transition font-bold">Edit</button>
                         <button 

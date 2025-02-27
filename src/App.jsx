@@ -14,6 +14,7 @@ import Books from "./components/user/Books"
 
 import ManageBook from "./components/Admin/ManageBook"
 import CustomerDetails from "./components/Admin/CustomerDetails"
+import Cart from "./components/user/Cart"
 
 function App() {
   return (
@@ -36,7 +37,9 @@ function App() {
           <Route path="/userabout" element={<Aboutu/>}/>
 
           <Route path="/books" element={<Books/>}/>
-          
+
+          <Route path="/cart" element={<Cart/>}/>
+
       </Routes>
     </BrowserRouter>
     </>

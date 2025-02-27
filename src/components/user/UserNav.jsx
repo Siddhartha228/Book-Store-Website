@@ -20,6 +20,12 @@ function UserNav() {
             </Link>
           </li>
           <li className="hover:text-gray-300 transition duration-300">
+            <Link to="/cart" className="flex items-center space-x-2">
+              <i className="fas fa-shopping-cart"></i>
+              <span>Cart</span>
+            </Link>
+          </li>
+          <li className="hover:text-gray-300 transition duration-300">
             <Link to="/userabout" className="flex items-center space-x-2">
               <i className="fas fa-info-circle"></i>
               <span>About</span>

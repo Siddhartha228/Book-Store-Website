@@ -8,22 +8,22 @@ const books = [
     title: "Python Crash Course",
     author: "Eric Matthes",
     description: "A hands-on, project-based introduction to programming in Python.",
-    price: "$29.99",
-    image: "/image"
+    price: "1200",
+    image: "https://th.bing.com/th/id/OIP.YXeUxEXczKyvokUWv3k3cAHaFj?w=223&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
   },
   {
     title: "Java: The Complete Reference",
     author: "Herbert Schildt",
     description: "Comprehensive guide to Java programming, covering all aspects of the language.",
-    price: "$39.99",
-    image: "/image"
+    price: "2000",
+    image: "https://th.bing.com/th/id/OIP.xe4HFq4YeBrfkgBA4z82KgHaJS?w=202&h=253&c=7&r=0&o=5&dpr=1.3&pid=1.7"
   },
   {
     title: "Database System Concepts",
     author: "Abraham Silberschatz",
     description: "Fundamentals of database systems, including design and implementation.",
-    price: "$49.99",
-    image: "/image"
+    price: "1800",
+    image: "https://th.bing.com/th/id/OIP.O4UlfXUrkZdpH9jEDobJjQHaJ4?w=202&h=269&c=7&r=0&o=5&dpr=1.3&pid=1.7"
   }
 ];
 
