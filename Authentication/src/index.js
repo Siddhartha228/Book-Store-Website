@@ -1,5 +1,5 @@
 import express from "express";
-import cors from "cors"; // Import CORS
+import cors from "cors"; 
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import { db } from "./database/index.js";
@@ -25,15 +25,13 @@ console.log("CORS middleware applied for origin: http://localhost:5137");
 
 // Middleware
 app.use(bodyParser.json());
+app.use(authenticateToken);
 
-// Auth routes (no token required)
-app.use("/api/auth", authRouter);
-app.use("/api/adminlogin", adminloginRouter);
-
-// Protected routes (token required)
-app.use(authenticateToken); // Apply token authentication after auth routes
+// API Routes
 app.use("/api/users", userRouter);
+app.use("/api/auth", authRouter);
 app.use("/api/file", router);
+app.use("/api/adminlogin", adminloginRouter);
 
 app.get("/api/test", (req, res) => {
   res.json({ message: "CORS is working!" });

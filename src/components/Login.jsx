@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 
@@ -7,6 +7,12 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  // Clears fields when component mounts
+  useEffect(() => {
+    setEmail("");
+    setPassword("");
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,14 +27,13 @@ const Login = () => {
 
       const data = await res.json();
 
-      // Check if response is not okay
       if (!res.ok) {
         throw new Error(data.message || "An error occurred");
       }
 
-      // Store token after successful login
-      localStorage.setItem("token", data.access_token); // ✅ Store token after successful login
-      navigate("/homeu"); // ✅ Redirect to Homeu.jsx after login
+      localStorage.setItem("token", data.access_token);
+      console.log("Login Successful, Redirecting...");
+      navigate("/userhome");
     } catch (err) {
       setError(err.message);
     }
@@ -46,6 +51,7 @@ const Login = () => {
               <label className="block text-gray-600 mb-1">Email</label>
               <input
                 type="email"
+                autoComplete="off" // Prevents autofill
                 placeholder="Enter your email"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
                 value={email}
@@ -57,6 +63,7 @@ const Login = () => {
               <label className="block text-gray-600 mb-1">Password</label>
               <input
                 type="password"
+                autoComplete="new-password" // Prevents previous password autofill
                 placeholder="Enter your password"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
                 value={password}

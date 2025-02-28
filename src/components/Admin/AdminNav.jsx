@@ -1,7 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 function AdminNav() {
+  const navigate = useNavigate(); // Initialize navigation
+
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Clear the token
+    navigate("/login"); // Redirect to the login page after logout
+  };
+
   return (
     <nav className="bg-black text-white py-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center px-6">
@@ -24,11 +32,12 @@ function AdminNav() {
               <span>Customer Details</span>
             </Link>
           </li>
+          {/* Change Logout link to button and call handleLogout */}
           <li className="hover:text-gray-300 transition duration-300">
-            <Link to="/login" className="flex items-center space-x-2">
+            <button onClick={handleLogout} className="flex items-center space-x-2">
               <i className="fas fa-sign-out-alt"></i>
               <span>Logout</span>
-            </Link>
+            </button>
           </li>
         </ul>
       </div>
