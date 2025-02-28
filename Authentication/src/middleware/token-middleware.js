@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export function authenticateToken(req, res, next) {
-  if (req.originalUrl.includes("/api/auth/signup") || req.originalUrl.includes("/api/adminlogin/login")) {
-    return next(); // Skip token check for signup and admin login
+  if (req.originalUrl.includes("/api/auth/signup") || 
+      req.originalUrl.includes("/api/auth/login") || 
+      req.originalUrl.includes("/api/adminlogin/login")) {
+    return next(); // Skip token check for signup, login and admin login
   }
 
   const authHeader = req.headers["authorization"];
