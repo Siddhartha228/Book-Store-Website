@@ -26,7 +26,7 @@ export const User = sequelize.define("User", {
   role: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: "user", 
+    defaultValue: "user", // Default role is user; admins will be set manually
   },
 });
 
