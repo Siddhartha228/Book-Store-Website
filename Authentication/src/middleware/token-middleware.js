@@ -5,8 +5,9 @@ dotenv.config();
 export function authenticateToken(req, res, next) {
   if (req.originalUrl.includes("/api/auth/signup") || 
       req.originalUrl.includes("/api/auth/login") || 
-      req.originalUrl.includes("/api/adminlogin/login")) {
-    return next(); // Skip token check for signup, login and admin login
+      req.originalUrl.includes("/api/adminlogin/login") ||
+      req.originalUrl.includes("/api/books")) {
+    return next(); // Skip token check 
   }
 
   const authHeader = req.headers["authorization"];
