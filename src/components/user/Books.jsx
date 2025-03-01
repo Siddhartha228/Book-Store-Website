@@ -7,7 +7,6 @@ function Books() {
   const [selectedBook, setSelectedBook] = useState(null);
   const [books, setBooks] = useState([]);
 
-  // Fetch books from backend with error handling
   const fetchBooks = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/books', {
@@ -20,7 +19,6 @@ function Books() {
       
       const data = await response.json();
       
-      // Transform data with proper error handling
       const transformedBooks = data.map(book => ({
         title: book.title || 'No Title',
         author: book.author || 'Unknown Author',
@@ -43,11 +41,20 @@ function Books() {
       console.log('Received bookAdded event, refreshing...');
       fetchBooks();
     };
+    const handleBookDeleted = () => {  // Added deletion handler
+      console.log('Received bookDeleted event, refreshing...');
+      fetchBooks();
+    };
+    
     window.addEventListener('bookAdded', handleBookAdded);
-    return () => window.removeEventListener('bookAdded', handleBookAdded);
+    window.addEventListener('bookDeleted', handleBookDeleted);  // Added event listener
+    
+    return () => {
+      window.removeEventListener('bookAdded', handleBookAdded);
+      window.removeEventListener('bookDeleted', handleBookDeleted);  // Added cleanup
+    };
   }, []);
 
-  
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -70,7 +77,6 @@ function Books() {
     <>
       <UserNav />
       <div className={`bg-gray-100 min-h-screen py-12 ${selectedBook ? "filter blur-sm pointer-events-none" : ""}`}>
-        {/* Search Bar */}
         <div className="flex justify-center mb-8">
           <input
             type="text"
@@ -81,12 +87,11 @@ function Books() {
           />
         </div>
 
-        {/* Books List */}
         <div className="grid grid-cols-3 gap-6 px-6">
           {filteredBooks.length > 0 ? (
             filteredBooks.map((book, index) => (
               <div
-                key={book.title + index}  // Better key using unique identifier
+                key={book.title + index}
                 className="bg-white shadow-md rounded-lg overflow-hidden p-4 transform transition-all hover:scale-102 hover:shadow-lg hover:bg-gray-50"
               >
                 <div className="relative w-full h-64 mb-4">
@@ -127,7 +132,6 @@ function Books() {
       </div>
       <Footer />
 
-      {/* Modal for Book Details */}
       {selectedBook && (
         <div className="fixed inset-0 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">

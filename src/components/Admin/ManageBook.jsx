@@ -7,7 +7,6 @@ function ManageBook() {
   const [selectedBookId, setSelectedBookId] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch books from backend
   const fetchBooks = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/books', {
@@ -37,7 +36,6 @@ function ManageBook() {
     }
   };
 
-  // Initial fetch and setup event listener
   useEffect(() => {
     fetchBooks();
     const handleBookAdded = () => {
@@ -49,7 +47,6 @@ function ManageBook() {
     return () => window.removeEventListener('bookAdded', handleBookAdded);
   }, []);
 
-  // Delete book functionality
   const handleDelete = async () => {
     try {
       const response = await fetch(`http://localhost:5000/api/books/${selectedBookId}`, {
@@ -63,6 +60,7 @@ function ManageBook() {
       
       setBooks(prev => prev.filter(book => book.id !== selectedBookId));
       setIsDeleteModalOpen(false);
+      window.dispatchEvent(new Event('bookDeleted')); // Added line
       alert('Book deleted successfully!');
     } catch (error) {
       alert(error.message);
@@ -141,7 +139,6 @@ function ManageBook() {
           )}
         </div>
 
-        {/* Delete Confirmation Modal */}
         {isDeleteModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center p-4 z-20">
             <div className="absolute inset-0 backdrop-blur-lg z-10"></div>
