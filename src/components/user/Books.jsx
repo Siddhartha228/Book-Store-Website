@@ -7,6 +7,35 @@ function Books() {
   const [selectedBook, setSelectedBook] = useState(null);
   const [books, setBooks] = useState([]);
 
+  const handleAddToCart = (bookToAdd) => {
+    try {
+      const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existingItem = currentCart.find(
+        (item) => 
+          item.title === bookToAdd.title && 
+          item.author === bookToAdd.author
+      );
+
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        currentCart.push({
+          ...bookToAdd,
+          quantity: 1,
+          price: bookToAdd.price, // Now using numeric value directly
+          image: bookToAdd.image
+        });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(currentCart));
+      window.dispatchEvent(new Event("cartUpdated"));
+      alert(`${bookToAdd.title} added to cart! 🛒`);
+    } catch (error) {
+      console.error('Add to cart error:', error);
+      alert('Failed to add to cart');
+    }
+  };
+
   const fetchBooks = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/books', {
@@ -23,7 +52,7 @@ function Books() {
         title: book.title || 'No Title',
         author: book.author || 'Unknown Author',
         description: book.description || 'No description available',
-        price: `₹${Number(book.price).toFixed(2)}` || '₹0.00',
+        price: Number(book.price) || 0, // Store as number instead of formatted string
         image: book.imageUrl || 'https://via.placeholder.com/150'
       }));
       
@@ -41,17 +70,17 @@ function Books() {
       console.log('Received bookAdded event, refreshing...');
       fetchBooks();
     };
-    const handleBookDeleted = () => {  // Added deletion handler
+    const handleBookDeleted = () => {
       console.log('Received bookDeleted event, refreshing...');
       fetchBooks();
     };
     
     window.addEventListener('bookAdded', handleBookAdded);
-    window.addEventListener('bookDeleted', handleBookDeleted);  // Added event listener
+    window.addEventListener('bookDeleted', handleBookDeleted);
     
     return () => {
       window.removeEventListener('bookAdded', handleBookAdded);
-      window.removeEventListener('bookDeleted', handleBookDeleted);  // Added cleanup
+      window.removeEventListener('bookDeleted', handleBookDeleted);
     };
   }, []);
 
@@ -108,9 +137,14 @@ function Books() {
                 <h3 className="text-xl font-semibold text-gray-800">{book.title}</h3>
                 <p className="text-sm text-gray-600 mt-1 font-medium">by {book.author}</p>
                 <p className="text-gray-700 mt-2 text-sm truncate">{book.description}</p>
-                <p className="text-lg font-semibold text-green-600 mt-2">{book.price}</p>
+                <p className="text-lg font-semibold text-green-600 mt-2">
+                  ₹{book.price.toFixed(2)} {/* Format price here */}
+                </p>
                 <div className="flex justify-between mt-4">
-                  <button className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 focus:ring-2 focus:ring-gray-400">
+                  <button 
+                    onClick={() => handleAddToCart(book)}
+                    className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 focus:ring-2 focus:ring-gray-400"
+                  >
                     Add to Cart
                   </button>
                   <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 focus:ring-2 focus:ring-green-400">
@@ -138,7 +172,9 @@ function Books() {
             <h2 className="text-2xl font-semibold text-gray-800">{selectedBook.title}</h2>
             <p className="text-gray-600 mt-2 font-medium">by {selectedBook.author}</p>
             <p className="text-gray-700 mt-4">{selectedBook.description}</p>
-            <p className="text-lg font-semibold text-green-600 mt-2">{selectedBook.price}</p>
+            <p className="text-lg font-semibold text-green-600 mt-2">
+              ₹{selectedBook.price.toFixed(2)} {/* Format price here */}
+            </p>
             <button
               onClick={closeModal}
               className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-400"
