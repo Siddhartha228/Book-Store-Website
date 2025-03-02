@@ -61,7 +61,6 @@ export const getBooks = async (req, res) => {
   }
 };
 
-// Add this new deleteBook function
 export const deleteBook = async (req, res) => {
   try {
     const bookId = req.params.id;
@@ -87,6 +86,53 @@ export const deleteBook = async (req, res) => {
     res.status(500).json({
       error: "Internal server error",
       details: error.message
+    });
+  }
+};
+
+export const updateBook = async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const { title, author, imageUrl, description, price } = req.body;
+
+    // Validate required fields
+    if (!title || !author || !imageUrl || !description || !price) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Validate price format
+    if (isNaN(price) || parseFloat(price) <= 0) {
+      return res.status(400).json({ error: "Invalid price format" });
+    }
+
+    const book = await Book.findByPk(bookId);
+    if (!book) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+
+    // Update book properties
+    book.title = title.trim();
+    book.author = author.trim();
+    book.imageUrl = imageUrl.trim();
+    book.description = description.trim();
+    book.price = parseFloat(price);
+
+    await book.save();
+
+    res.status(200).json(book);
+
+  } catch (error) {
+    console.error('Error updating book:', error);
+    
+    // Handle validation errors
+    if (error.name === 'SequelizeValidationError') {
+      const errors = error.errors.map(err => err.message);
+      return res.status(400).json({ error: errors.join(', ') });
+    }
+
+    res.status(500).json({ 
+      error: "Internal server error",
+      details: error.message 
     });
   }
 };

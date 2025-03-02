@@ -22,7 +22,7 @@ function Books() {
         currentCart.push({
           ...bookToAdd,
           quantity: 1,
-          price: bookToAdd.price, // Now using numeric value directly
+          price: bookToAdd.price, 
           image: bookToAdd.image
         });
       }
@@ -52,7 +52,7 @@ function Books() {
         title: book.title || 'No Title',
         author: book.author || 'Unknown Author',
         description: book.description || 'No description available',
-        price: Number(book.price) || 0, // Store as number instead of formatted string
+        price: Number(book.price) || 0, 
         image: book.imageUrl || 'https://via.placeholder.com/150'
       }));
       
@@ -74,13 +74,19 @@ function Books() {
       console.log('Received bookDeleted event, refreshing...');
       fetchBooks();
     };
+    const handleBookUpdated = () => {
+      console.log('Received bookUpdated event, refreshing...');
+      fetchBooks();
+    };
     
     window.addEventListener('bookAdded', handleBookAdded);
     window.addEventListener('bookDeleted', handleBookDeleted);
+    window.addEventListener('bookUpdated', handleBookUpdated);
     
     return () => {
       window.removeEventListener('bookAdded', handleBookAdded);
       window.removeEventListener('bookDeleted', handleBookDeleted);
+      window.removeEventListener('bookUpdated', handleBookUpdated);
     };
   }, []);
 
@@ -138,7 +144,7 @@ function Books() {
                 <p className="text-sm text-gray-600 mt-1 font-medium">by {book.author}</p>
                 <p className="text-gray-700 mt-2 text-sm truncate">{book.description}</p>
                 <p className="text-lg font-semibold text-green-600 mt-2">
-                  ₹{book.price.toFixed(2)} {/* Format price here */}
+                  ₹{book.price.toFixed(2)} 
                 </p>
                 <div className="flex justify-between mt-4">
                   <button 
@@ -173,7 +179,7 @@ function Books() {
             <p className="text-gray-600 mt-2 font-medium">by {selectedBook.author}</p>
             <p className="text-gray-700 mt-4">{selectedBook.description}</p>
             <p className="text-lg font-semibold text-green-600 mt-2">
-              ₹{selectedBook.price.toFixed(2)} {/* Format price here */}
+              ₹{selectedBook.price.toFixed(2)} 
             </p>
             <button
               onClick={closeModal}

@@ -1,13 +1,13 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { Link, useNavigate } from "react-router-dom"; 
 
 function AdminNav() {
-  const navigate = useNavigate(); // Initialize navigation
+  const navigate = useNavigate(); 
 
-  // Handle logout
+  
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Clear the token
-    navigate("/login"); // Redirect to the login page after logout
+    localStorage.removeItem("token"); 
+    navigate("/login"); 
   };
 
   return (

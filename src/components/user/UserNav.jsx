@@ -4,10 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 function UserNav() {
   const navigate = useNavigate();
 
-  // Logout handler function
+  
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Clear the token
-    navigate("/login"); // Redirect to the login page after logout
+    localStorage.removeItem("token"); 
+    navigate("/login"); 
   };
 
   return (

@@ -51,7 +51,7 @@ const Login = () => {
               <label className="block text-gray-600 mb-1">Email</label>
               <input
                 type="email"
-                autoComplete="off" // Prevents autofill
+                autoComplete="off" 
                 placeholder="Enter your email"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
                 value={email}
@@ -63,7 +63,7 @@ const Login = () => {
               <label className="block text-gray-600 mb-1">Password</label>
               <input
                 type="password"
-                autoComplete="new-password" // Prevents previous password autofill
+                autoComplete="new-password" 
                 placeholder="Enter your password"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
                 value={password}
