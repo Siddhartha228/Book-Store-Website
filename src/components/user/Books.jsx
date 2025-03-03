@@ -6,6 +6,13 @@ function Books() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBook, setSelectedBook] = useState(null);
   const [books, setBooks] = useState([]);
+  const [showBuyForm, setShowBuyForm] = useState(false);
+  const [selectedBookForPurchase, setSelectedBookForPurchase] = useState(null);
+  const [customerDetails, setCustomerDetails] = useState({
+    name: "",
+    contact: "",
+    address: ""
+  });
 
   const handleAddToCart = (bookToAdd) => {
     try {
@@ -34,6 +41,29 @@ function Books() {
       console.error('Add to cart error:', error);
       alert('Failed to add to cart');
     }
+  };
+
+  const handleBuyNow = (book) => {
+    setSelectedBookForPurchase(book);
+    setShowBuyForm(true);
+  };
+
+  const handleBuySubmit = (e) => {
+    e.preventDefault();
+    const order = {
+      ...customerDetails,
+      bookTitle: selectedBookForPurchase.title,
+      price: selectedBookForPurchase.price,
+      date: new Date().toISOString(),
+      status: "Pending"
+    };
+
+    const existingOrders = JSON.parse(localStorage.getItem("orders") || "[]");
+    localStorage.setItem("orders", JSON.stringify([...existingOrders, order]));
+    
+    setCustomerDetails({ name: "", contact: "", address: "" });
+    setShowBuyForm(false);
+    alert("Order placed successfully!");
   };
 
   const fetchBooks = async () => {
@@ -66,18 +96,9 @@ function Books() {
 
   useEffect(() => {
     fetchBooks();
-    const handleBookAdded = () => {
-      console.log('Received bookAdded event, refreshing...');
-      fetchBooks();
-    };
-    const handleBookDeleted = () => {
-      console.log('Received bookDeleted event, refreshing...');
-      fetchBooks();
-    };
-    const handleBookUpdated = () => {
-      console.log('Received bookUpdated event, refreshing...');
-      fetchBooks();
-    };
+    const handleBookAdded = () => fetchBooks();
+    const handleBookDeleted = () => fetchBooks();
+    const handleBookUpdated = () => fetchBooks();
     
     window.addEventListener('bookAdded', handleBookAdded);
     window.addEventListener('bookDeleted', handleBookDeleted);
@@ -90,17 +111,9 @@ function Books() {
     };
   }, []);
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const openModal = (book) => {
-    setSelectedBook(book);
-  };
-
-  const closeModal = () => {
-    setSelectedBook(null);
-  };
+  const handleSearch = (e) => setSearchQuery(e.target.value);
+  const openModal = (book) => setSelectedBook(book);
+  const closeModal = () => setSelectedBook(null);
 
   const filteredBooks = books.filter(
     (book) =>
@@ -111,7 +124,7 @@ function Books() {
   return (
     <>
       <UserNav />
-      <div className={`bg-gray-100 min-h-screen py-12 ${selectedBook ? "filter blur-sm pointer-events-none" : ""}`}>
+      <div className={`bg-gray-100 min-h-screen py-12 ${(selectedBook || showBuyForm) ? "filter blur-sm pointer-events-none" : ""}`}>
         <div className="flex justify-center mb-8">
           <input
             type="text"
@@ -153,7 +166,10 @@ function Books() {
                   >
                     Add to Cart
                   </button>
-                  <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 focus:ring-2 focus:ring-green-400">
+                  <button 
+                    onClick={() => handleBuyNow(book)}
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 focus:ring-2 focus:ring-green-400"
+                  >
                     Buy Now
                   </button>
                 </div>
@@ -172,6 +188,7 @@ function Books() {
       </div>
       <Footer />
 
+      {/* Book Details Modal */}
       {selectedBook && (
         <div className="fixed inset-0 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
@@ -179,7 +196,7 @@ function Books() {
             <p className="text-gray-600 mt-2 font-medium">by {selectedBook.author}</p>
             <p className="text-gray-700 mt-4">{selectedBook.description}</p>
             <p className="text-lg font-semibold text-green-600 mt-2">
-              ₹{selectedBook.price.toFixed(2)} 
+              ₹{selectedBook.price.toFixed(2)}
             </p>
             <button
               onClick={closeModal}
@@ -187,6 +204,79 @@ function Books() {
             >
               Close
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Purchase Form Modal */}
+      {showBuyForm && selectedBookForPurchase && (
+        <div className="fixed inset-0 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h2 className="text-2xl font-semibold mb-4">Purchase Details</h2>
+            <form onSubmit={handleBuySubmit}>
+              <div className="mb-4">
+                <label className="block text-gray-700">Book Title</label>
+                <input
+                  type="text"
+                  value={selectedBookForPurchase.title}
+                  readOnly
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Price</label>
+                <input
+                  type="text"
+                  value={`₹${selectedBookForPurchase.price.toFixed(2)}`}
+                  readOnly
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  value={customerDetails.name}
+                  onChange={(e) => setCustomerDetails({...customerDetails, name: e.target.value})}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Contact Number</label>
+                <input
+                  type="tel"
+                  required
+                  value={customerDetails.contact}
+                  onChange={(e) => setCustomerDetails({...customerDetails, contact: e.target.value})}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Delivery Address</label>
+                <textarea
+                  required
+                  value={customerDetails.address}
+                  onChange={(e) => setCustomerDetails({...customerDetails, address: e.target.value})}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowBuyForm(false)}
+                  className="px-4 py-2 bg-gray-500 text-white rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-green-600 text-white rounded"
+                >
+                  Confirm Order
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

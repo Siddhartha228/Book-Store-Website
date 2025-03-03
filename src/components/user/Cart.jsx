@@ -73,7 +73,7 @@ function Cart() {
             
             <div className="mt-6 p-4 bg-white shadow-md rounded-lg">
               <h3 className="text-xl font-semibold">
-                Total: ₹
+                Total: NPR
                 {cartItems
                   .reduce((sum, item) => sum + item.price * item.quantity, 0)
                   .toFixed(2)}
